@@ -449,6 +449,8 @@
 
                             // fetch-products
                             $sql = "SELECT * FROM tbl_products ";
+                            $param_category = '';
+                            $param_model = '';
 
                             if (isset($_POST['btn-search'])) {
                                 $sql .= " WHERE product_name LIKE :search_term";
@@ -458,9 +460,12 @@
                             }
                             if (isset($_GET['category'])) {
                                 $sql .= " AND product_category = :category";
+                                $param_category = '&category='.$_GET['category'];                                
                             }
                             if (isset($_GET['model'])) {
                                 $sql .= " AND product_model = :model";
+                                $param_model = '&model='.$_GET['model'];
+
                             }
 
                             if ($sort == 'low') {
@@ -470,6 +475,8 @@
                             } else {
                                 $sql .= ' ORDER BY created_at DESC';
                             }
+                            $param_sort = isset($_GET['sort']) ? '&sort='.$_GET['sort']: '';
+
 
                             $sql .= " LIMIT :start, :limit";
 
@@ -521,7 +528,7 @@
                             $showPrevNext = $total_pages > 3;
                             if ($showPrevNext && $current_page > 1) {
 
-                                echo '<li><a href="?page=' . ($current_page - 1) . '" class="h-10 w-16 bg-gray-200 text-black flex mr-3 justify-center items-center text-base group-hover:cursor-pointer hover:bg-black hover:text-white duration-700">Prev</a></li>';
+                                echo '<li><a href="?page=' . ($current_page - 1) . $param_sort . $param_category . $param_model .'" class="h-10 w-16 bg-gray-200 text-black flex mr-3 justify-center items-center text-base group-hover:cursor-pointer hover:bg-black hover:text-white duration-700">Prev</a></li>';
                             }
 
                             for ($i = max(1, $current_page - 2); $i <= min($current_page + 2, $total_pages); $i++) {
@@ -529,13 +536,13 @@
                                 if ($i == $current_page) {
                                     echo '<li class="h-10 w-10 font-bold bg-black text-white flex justify-center items-center text-base mr-3">' . $i . '</li>';
                                 } else {
-                                    echo '<li><a href="?page=' . $i . '" class="h-10 w-10 bg-gray-200 text-black flex mr-3 justify-center items-center text-base group-hover:cursor-pointer hover:bg-black hover:text-white duration-700">' . $i . '</a></li>';
+                                    echo '<li><a href="?page=' . $i .  $param_sort . $param_category . $param_model .'" class="h-10 w-10 bg-gray-200 text-black flex mr-3 justify-center items-center text-base group-hover:cursor-pointer hover:bg-black hover:text-white duration-700">' . $i . '</a></li>';
                                 }
                             }
 
                             if ($showPrevNext && $current_page < $total_pages) {
 
-                                echo '<li><a href="?page=' . ($current_page + 1) . '" class="h-10 w-16 bg-gray-200 text-black flex mr-3 justify-center items-center text-base group-hover:cursor-pointer hover:bg-black hover:text-white duration-700">Next</a></li>';
+                                echo '<li><a href="?page=' . ($current_page + 1) .  $param_sort . $param_category . $param_model .'" class="h-10 w-16 bg-gray-200 text-black flex mr-3 justify-center items-center text-base group-hover:cursor-pointer hover:bg-black hover:text-white duration-700">Next</a></li>';
                             }
                             ?>
                         </ul>

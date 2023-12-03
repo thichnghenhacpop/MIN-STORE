@@ -138,7 +138,7 @@
                             <ul
                                 class="absolute bg-white top-3/4 group-hover:block hidden right-0 text-xs  w-32 border border-gray-300 h-8 shadow-md hover:cursor-pointer animate__animated animate__fadeInUp animate__fast">
                                 <li class="flex px-6 py-2">
-                                    <form action="">
+                                    <form action="" method="post">
                                         <i class="fa-solid fa-arrow-right-from-bracket"></i>
                                         <button type="submit" name="btn-logout">Đăng Xuất</button>
                                     </form>
@@ -147,7 +147,7 @@
                                         $_SESSION = array();
                                         session_destroy();
                                         echo "<script>window.location.href='../../pages/login.php'</script>";
-                                        exit();
+                                        
                                     }
 
                                     ?>
